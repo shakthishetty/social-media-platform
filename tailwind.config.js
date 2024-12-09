@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
-const tailwindcssAnimate = require('tailwindcss-animate');
+import tailwindcssAnimate from 'tailwindcss-animate';
 
-module.exports = {
+export default {
   darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -35,11 +35,11 @@ module.exports = {
         'light-4': '#5C5C7B',
       },
       screens: {
-        'xs': '480px',
+        xs: '480px',
       },
       width: {
-        '420': '420px',
-        '465': '465px',
+        420: '420px',
+        465: '465px',
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
