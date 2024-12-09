@@ -1,17 +1,17 @@
-import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
+import Loader from "@/components/shared/Loader";
+import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Loader from "@/components/shared/Loader";
 import { useToast } from "@/components/ui/use-toast";
 
+import { useUserContext } from "@/context/AuthContext";
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queries";
 import { SignupValidation } from "@/lib/validation";
-import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
   const { toast } = useToast();
