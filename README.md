@@ -57,18 +57,21 @@ This is a fully functional social media feed web application built using React.j
    git clone <repository-url>
    cd <repository-folder>
 
-2. ```npm install
+2. ```bash
+      npm install
 
-3. ```Create a .env file in the root of your project.
+3. Create a .env file in the root of your project.
     Add the following environment variables:
-VITE_APPWRITE_PROJECT_ID='<YOUR_PROJECT_ID>'
-VITE_APPWRITE_URL='<YOUR_APPWRITE_URL>'
-VITE_APPWRITE_STORAGE_ID='<YOUR_STORAGE_BUCKET_ID>'
-VITE_APPWRITE_DATABASE_ID='<YOUR_DATABASE_ID>'
-VITE_APPWRITE_USER_COLLECTION_ID='<YOUR_USER_COLLECTION_ID>'
-VITE_APPWRITE_POST_COLLECTION_ID='<YOUR_POST_COLLECTION_ID>'
-VITE_APPWRITE_SAVES_COLLECTION_ID='<YOUR_SAVES_COLLECTION_ID>'
+    ```bash
+        VITE_APPWRITE_PROJECT_ID='<YOUR_PROJECT_ID>'
+        VITE_APPWRITE_URL='<YOUR_APPWRITE_URL>'
+        VITE_APPWRITE_STORAGE_ID='<YOUR_STORAGE_BUCKET_ID>'
+        VITE_APPWRITE_DATABASE_ID='<YOUR_DATABASE_ID>'
+        VITE_APPWRITE_USER_COLLECTION_ID='<YOUR_USER_COLLECTION_ID>'
+        VITE_APPWRITE_POST_COLLECTION_ID='<YOUR_POST_COLLECTION_ID>'
+        VITE_APPWRITE_SAVES_COLLECTION_ID='<YOUR_SAVES_COLLECTION_ID>'
 
-4.  ```Run the development server:
-  ```npm run dev
+4.  Run the development server:
+```bash
+  npm run dev
 
