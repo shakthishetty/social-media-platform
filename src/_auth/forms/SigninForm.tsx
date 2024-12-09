@@ -1,17 +1,24 @@
-import * as z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import * as z from "zod";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import Loader from "@/components/shared/Loader";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 
-import { SigninValidation } from "@/lib/validation";
-import { useSignInAccount } from "@/lib/react-query/queries";
 import { useUserContext } from "@/context/AuthContext";
+import { useSignInAccount } from "@/lib/react-query/queries";
+import { SigninValidation } from "@/lib/validation";
 
 const SigninForm = () => {
   const { toast } = useToast();
@@ -34,7 +41,6 @@ const SigninForm = () => {
 
     if (!session) {
       toast({ title: "Login failed. Please try again." });
-      
       return;
     }
 
@@ -42,78 +48,103 @@ const SigninForm = () => {
 
     if (isLoggedIn) {
       form.reset();
-
       navigate("/");
     } else {
-      toast({ title: "Login failed. Please try again.", });
-      
+      toast({ title: "Login failed. Please try again." });
       return;
     }
   };
 
   return (
-    <Form {...form}>
-      <div className="sm:w-420 flex-center flex-col">
-        <img src="/assets/images/logo.svg" alt="logo" />
-
-        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
-          Log in to your account
-        </h2>
-        <p className="text-light-3 small-medium md:base-regular mt-2">
-          Welcome back! Please enter your details.
-        </p>
-        <form
-          onSubmit={form.handleSubmit(handleSignin)}
-          className="flex flex-col gap-5 w-full mt-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="shad-form_label">Email</FormLabel>
-                <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+    <div className="flex items-center justify-center min-h-screen bg-black">
+      {/* Form Container */}
+      <Form {...form}>
+        <div className="flex flex-col items-center w-full max-w-sm px-4 py-8 mx-auto bg-gray-900 rounded-lg shadow-lg sm:px-8 md:max-w-md lg:max-w-lg">
+          <img
+            src="/assets/images/logo.svg"
+            alt="logo"
+            className="w-16 h-16 sm:w-20 sm:h-20"
           />
 
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="shad-form_label">Password</FormLabel>
-                <FormControl>
-                  <Input type="password" className="shad-input" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type="submit" className="shad-button_primary">
-            {isLoading || isUserLoading ? (
-              <div className="flex-center gap-2">
-                <Loader /> Loading...
-              </div>
-            ) : (
-              "Log in"
-            )}
-          </Button>
-
-          <p className="text-small-regular text-light-2 text-center mt-2">
-            Don&apos;t have an account?
-            <Link
-              to="/sign-up"
-              className="text-primary-500 text-small-semibold ml-1">
-              Sign up
-            </Link>
+          <h2 className="text-xl font-bold text-white sm:text-2xl md:text-3xl pt-4 text-center">
+            Log in to your account
+          </h2>
+          <p className="text-sm text-gray-400 mt-2 text-center">
+            Welcome back! Please enter your details.
           </p>
-        </form>
-      </div>
-    </Form>
+
+          <form
+            onSubmit={form.handleSubmit(handleSignin)}
+            className="flex flex-col gap-4 w-full mt-6"
+          >
+            {/* Email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-gray-300">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-gray-800 text-white placeholder-gray-500"
+                      placeholder="Enter your email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Password */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-gray-300">Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-gray-800 text-white placeholder-gray-500"
+                      placeholder="Enter your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              className="w-full py-2 text-white bg-primary-500 rounded-md hover:bg-primary-600 flex items-center justify-center"
+            >
+              {isLoading || isUserLoading ? (
+                <div className="flex items-center gap-2">
+                  <Loader /> Loading...
+                </div>
+              ) : (
+                "Log in"
+              )}
+            </Button>
+
+            {/* Sign Up Link */}
+            <p className="text-center text-sm text-gray-400 mt-4">
+              Don&apos;t have an account?{" "}
+              <Link
+                to="/sign-up"
+                className="text-primary-500 font-semibold hover:underline"
+              >
+                Sign up
+              </Link>
+            </p>
+          </form>
+        </div>
+      </Form>
+    </div>
   );
 };
 

@@ -5,7 +5,14 @@ import * as z from "zod";
 
 import Loader from "@/components/shared/Loader";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -28,18 +35,15 @@ const SignupForm = () => {
     },
   });
 
-  // Queries
   const { mutateAsync: createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccount();
   const { mutateAsync: signInAccount, isLoading: isSigningInUser } = useSignInAccount();
 
-  // Handler
   const handleSignup = async (user: z.infer<typeof SignupValidation>) => {
     try {
       const newUser = await createUserAccount(user);
 
       if (!newUser) {
-        toast({ title: "Sign up failed. Please try again.", });
-        
+        toast({ title: "Sign up failed. Please try again." });
         return;
       }
 
@@ -49,10 +53,8 @@ const SignupForm = () => {
       });
 
       if (!session) {
-        toast({ title: "Something went wrong. Please login your new account", });
-        
+        toast({ title: "Something went wrong. Please login to your new account" });
         navigate("/sign-in");
-        
         return;
       }
 
@@ -60,110 +62,152 @@ const SignupForm = () => {
 
       if (isLoggedIn) {
         form.reset();
-
         navigate("/");
       } else {
-        toast({ title: "Login failed. Please try again.", });
-        
+        toast({ title: "Login failed. Please try again." });
         return;
       }
     } catch (error) {
-      console.log({ error });
+      console.error({ error });
     }
   };
 
   return (
-    <Form {...form}>
-      <div className="sm:w-420 flex-center flex-col">
-        <img src="/assets/images/logo.svg" alt="logo" />
+    <div className="flex items-center justify-center min-h-screen bg-cover bg-center relative" 
+      style={{
+        backgroundImage: "url('/path-to-your-background-image.jpg')",
+      }}>
+      {/* Black Transparent Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
-        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
-          Create a new account
-        </h2>
-        <p className="text-light-3 small-medium md:base-regular mt-2">
-          To use snapgram, Please enter your details
-        </p>
-
-        <form
-          onSubmit={form.handleSubmit(handleSignup)}
-          className="flex flex-col gap-5 w-full mt-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="shad-form_label">Name</FormLabel>
-                <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+      {/* Form Container */}
+      <Form {...form}>
+        <div className="relative flex flex-col items-center w-full max-w-sm px-4 py-8 mx-auto bg-black bg-opacity-90 rounded-lg shadow-lg sm:px-8 md:max-w-md lg:max-w-lg">
+          <img
+            src="/assets/images/logo.svg"
+            alt="logo"
+            className="w-16 h-16 sm:w-20 sm:h-20"
           />
 
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="shad-form_label">Username</FormLabel>
-                <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="shad-form_label">Email</FormLabel>
-                <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="shad-form_label">Password</FormLabel>
-                <FormControl>
-                  <Input type="password" className="shad-input" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type="submit" className="shad-button_primary">
-            {isCreatingAccount || isSigningInUser || isUserLoading ? (
-              <div className="flex-center gap-2">
-                <Loader /> Loading...
-              </div>
-            ) : (
-              "Sign Up"
-            )}
-          </Button>
-
-          <p className="text-small-regular text-light-2 text-center mt-2">
-            Already have an account?
-            <Link
-              to="/sign-in"
-              className="text-primary-500 text-small-semibold ml-1">
-              Log in
-            </Link>
+          <h2 className="text-xl font-bold text-white sm:text-2xl md:text-3xl pt-4 text-center">
+            Create a new account
+          </h2>
+          <p className="text-sm text-gray-400 mt-2 text-center">
+            To use Snapgram, please enter your details.
           </p>
-        </form>
-      </div>
-    </Form>
+
+          <form
+            onSubmit={form.handleSubmit(handleSignup)}
+            className="flex flex-col gap-4 w-full mt-6"
+          >
+            {/* Name */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-gray-300">Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-gray-900 text-white placeholder-gray-500"
+                      placeholder="Enter your name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Username */}
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-gray-300">Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-gray-900 text-white placeholder-gray-500"
+                      placeholder="Choose a username"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-gray-300">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-gray-900 text-white placeholder-gray-500"
+                      placeholder="Enter your email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Password */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-gray-300">Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-gray-900 text-white placeholder-gray-500"
+                      placeholder="Create a password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              className="w-full py-2 text-white bg-primary-500 rounded-md hover:bg-primary-600 flex items-center justify-center"
+            >
+              {isCreatingAccount || isSigningInUser || isUserLoading ? (
+                <div className="flex items-center gap-2">
+                  <Loader /> Loading...
+                </div>
+              ) : (
+                "Sign Up"
+              )}
+            </Button>
+
+            {/* Login Link */}
+            <p className="text-center text-sm text-gray-400 mt-4">
+              Already have an account?{" "}
+              <Link
+                to="/sign-in"
+                className="text-primary-500 font-semibold hover:underline"
+              >
+                Log in
+              </Link>
+            </p>
+          </form>
+        </div>
+      </Form>
+    </div>
   );
 };
 
